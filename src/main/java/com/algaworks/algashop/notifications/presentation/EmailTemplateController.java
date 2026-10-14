@@ -4,6 +4,8 @@ import com.algaworks.algashop.notifications.application.template.management.Emai
 import com.algaworks.algashop.notifications.application.template.management.EmailTemplateManagementApplicationService;
 import com.algaworks.algashop.notifications.application.template.query.EmailTemplateOutput;
 import com.algaworks.algashop.notifications.application.template.query.EmailTemplateQueryService;
+import com.algaworks.algashop.notifications.infrastructure.security.SecurityAnnotations.CanReadEmailTemplates;
+import com.algaworks.algashop.notifications.infrastructure.security.SecurityAnnotations.CanWriteEmailTemplates;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +33,7 @@ public class EmailTemplateController {
 	private final EmailTemplateQueryService queryService;
 
 	@PostMapping
+	@CanWriteEmailTemplates
 	public ResponseEntity<EmailTemplateOutput> create(@RequestBody @Valid EmailTemplateInput input) {
 		UUID id = managementService.create(input);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -39,22 +42,26 @@ public class EmailTemplateController {
 	}
 
 	@GetMapping
+	@CanReadEmailTemplates
 	public PagedModel<EmailTemplateOutput> list(Pageable pageable) {
 		return new PagedModel<>(queryService.findAll(pageable));
 	}
 
 	@GetMapping("/{id}")
+	@CanReadEmailTemplates
 	public EmailTemplateOutput get(@PathVariable UUID id) {
 		return queryService.findById(id);
 	}
 
 	@PutMapping("/{id}")
+	@CanWriteEmailTemplates
 	public EmailTemplateOutput update(@PathVariable UUID id, @RequestBody @Valid EmailTemplateInput input) {
 		managementService.update(id, input);
 		return queryService.findById(id);
 	}
 
 	@DeleteMapping("/{id}")
+	@CanWriteEmailTemplates
 	public ResponseEntity<Void> delete(@PathVariable UUID id) {
 		managementService.delete(id);
 		return ResponseEntity.noContent().build();
