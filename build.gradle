@@ -50,6 +50,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 
 	implementation 'org.jsoup:jsoup:1.23.2'
+	implementation 'com.fasterxml.uuid:java-uuid-generator:5.2.0'
 	testImplementation 'org.assertj:assertj-core:3.27.6'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'

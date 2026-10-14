@@ -41,7 +41,7 @@ class EmailTemplateRendererThymeleafImplTest {
 		Assertions.assertThatCode(()-> renderer.assertRenderable(
 				"Hi [[${recipient.name}]]!",
 				"<p th:text=\"${order.id}\">xpto</p>"
-		));
+		)).doesNotThrowAnyException();
 	}
 
 	@Test
