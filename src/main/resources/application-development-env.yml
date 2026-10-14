@@ -9,6 +9,8 @@ spring:
     show-sql: true
   flyway:
     locations: classpath:db/migration,classpath:db/testdata
+  kafka:
+    bootstrap-servers: algashop-kafka-1:9092,algashop-kafka-2:9093,algashop-kafka-3:9094
   mail:
     host: localhost
     port: 1025
